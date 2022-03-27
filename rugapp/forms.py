@@ -8,7 +8,7 @@ class SearchForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_style = 'inline'
-    query = forms.CharField(label='query', max_length=100, widget=forms.TextInput(attrs={'class': "form-inline form-control mr-sm-2"}))
+    query = forms.CharField(label='query', max_length=100, widget=forms.TextInput(attrs={'class': "form-inline form-control mr-sm-2", 'placeholder':'Search'}))
 
 class VoteForm(forms.ModelForm):
 

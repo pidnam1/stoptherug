@@ -119,9 +119,17 @@ def searched(request):
     entry_query = get_query(query_string, ['name',])
 
     found_entries = NFTProject.objects.filter(entry_query).order_by('-total_volume')
+    if request.POST:
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            query = form.cleaned_data.get('query')
+            request.session['query'] = query
+            return redirect('/searched/')
+    else:
+        form = SearchForm
 
     return render(request, 'rugapp/searched.html',
-                              {'query': query_string, 'nfts': found_entries}
+                              {'query': query_string, 'nfts': found_entries, 'form': form}
                               )
 
 def about(request):
