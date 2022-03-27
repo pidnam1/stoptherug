@@ -6,5 +6,5 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('searched/', views.searched, name='searched'),
     path('about/', views.about, name='about'),
-    path('report/', views.report, name='report'),
+    path('report/<int:nft_id>/', views.report, name='report'),
 ]

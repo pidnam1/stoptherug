@@ -11,6 +11,13 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 
+a:link { text-decoration: none; }
+a:visited { text-decoration: none; }
+a:hover { text-decoration: underline;
+ transition: 0.5s;}
+a:active { text-decoration: underline;
+ transition: 0.5s;}
+
 .card {
     width: 400px;
     border: none;
