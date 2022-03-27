@@ -19,3 +19,8 @@ class NFTProject(models.Model):
     safelist_request_status = models.CharField(max_length=2000, null=True)
     credibility_rating = models.DecimalField(max_digits=8, decimal_places=1, null=True, default = 0)
     votes = models.IntegerField(null=True, default = 0)
+
+class Comments(models.Model):
+    text = models.CharField(max_length=20000, null=True)
+    upvotes = models.IntegerField(null=True, default = 0)
+    nft = models.ForeignKey(NFTProject, on_delete=models.CASCADE)
