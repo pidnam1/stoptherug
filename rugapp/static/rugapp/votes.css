@@ -20,11 +20,6 @@ a:hover { text-decoration: underline;
 a:active { text-decoration: underline;
  transition: 0.5s;}
 
- .alert {
-   width:40%;
-   margin:auto;
-}
-
 .card {
     width: 400px;
     border: none;
@@ -32,14 +27,9 @@ a:active { text-decoration: underline;
     padding: 8px;
     background-color: #fff;
     position: relative;
-    height: 310px
+    height: 300px
 }
 
-.card:hover{
-   transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
-  transition: 0.5s;
-}
 
 .upper {
     height: 100px
@@ -11363,6 +11353,6 @@ header {
 }
 
 section {
-  padding-top:25px;
+  padding-top:0px;
   padding-bottom:5px;
   }

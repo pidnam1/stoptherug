@@ -2,8 +2,8 @@ import requests
 from django.db.models import Q
 from django.shortcuts import render, redirect
 import json
-from .forms import SearchForm
-from .models import NFTProject
+from .forms import SearchForm, VoteForm
+from .models import NFTProject, Comments
 
 
 # Create your views here.
@@ -85,9 +85,18 @@ def home(request):
 
 
     nfts = NFTProject.objects.order_by('-total_volume')[0:10]
+    voted = False
+    nft_voted_for = ""
+    if request.session['voted'] == True:
 
-    form = SearchForm(request.POST)
+        voted = True
+        nft_voted_for = request.session['nft_voted']
+        request.session['nft_voted'] = ""
+        request.session['voted'] = False
+
+
     if request.POST:
+        form = SearchForm(request.POST)
         if form.is_valid():
             query = form.cleaned_data.get('query')
             request.session['query'] = query
@@ -97,17 +106,19 @@ def home(request):
 
 
 
-    return render(request, 'rugapp/home.html', {"nfts": nfts, 'form': form})
+    return render(request, 'rugapp/home.html', {"nfts": nfts, 'form': form, "voted":voted, "nft_voted_for": nft_voted_for})
 
 def searched(request):
 
-    query_string = address = request.session.get('query')
+    if request.session.get('query') != "":
+        query_string = request.session.get('query')
+    else:
+        query_string = "StopTheRug"
     found_entries = None
 
     entry_query = get_query(query_string, ['name',])
 
     found_entries = NFTProject.objects.filter(entry_query).order_by('-total_volume')
-
 
     return render(request, 'rugapp/searched.html',
                               {'query': query_string, 'nfts': found_entries}
@@ -118,11 +129,37 @@ def about(request):
 
 
     return render(request, 'rugapp/about.html')
+
+def vote(request, nft_id):
+    nft = NFTProject.objects.get(pk=nft_id)
+
+    if request.POST:
+        form = VoteForm(request.POST)
+        if form.is_valid():
+            vote = form.cleaned_data.get('vote')
+            comment = form.cleaned_data.get('comment')
+            new_commment = Comments(text = comment, nft = nft)
+            new_commment.save()
+            nft.votes += 1
+            nft.total_cred += vote
+            nft.credibility_rating = nft.total_cred/nft.votes
+            nft.save()
+            request.session['voted'] = True
+            request.session['nft_voted'] = nft.name
+            return redirect('/')
+    else:
+        form = VoteForm
+
+    return render(request, 'rugapp/vote.html', {"nft": nft, "form":form})
+
 def report(request, nft_id):
 
     nft = NFTProject.objects.get(pk = nft_id)
+    comments = Comments.objects.filter(nft = nft)
 
-    return render(request, 'rugapp/report.html', {"nft": nft})
+    votes = []
+
+    return render(request, 'rugapp/report.html', {"nft": nft, "comments": comments, "comment_amount":len(comments)})
 
 
 

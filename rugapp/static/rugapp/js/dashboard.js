@@ -369,20 +369,10 @@
     if ($("#marketingOverview").length) {
       var marketingOverviewChart = document.getElementById("marketingOverview").getContext('2d');
       var marketingOverviewData = {
-          labels: ["JAN","FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
+          labels: ["-10","-9", "-8", "-7", "-6", "-5", "-4", "-3", "-2", "1"],
           datasets: [{
-              label: 'Last week',
-              data: [110, 220, 200, 190, 220, 110, 210, 110, 205, 202, 201, 150],
-              backgroundColor: "#52CDFF",
-              borderColor: [
-                  '#52CDFF',
-              ],
-              borderWidth: 0,
-              fill: true, // 3: no fill
-              
-          },{
-            label: 'This week',
-            data: [215, 290, 210, 250, 290, 230, 290, 210, 280, 220, 190, 300],
+            label: 'Most recent ratings',
+            data: [80, 98, 74, 85, 88, 89, 90, 95, 99, 82 ],
             backgroundColor: "#1F3BB3",
             borderColor: [
                 '#1F3BB3',

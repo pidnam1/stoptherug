@@ -12,33 +12,35 @@
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
         {% load static %}
+        {% load crispy_forms_tags %}
+
    <link rel="stylesheet" type="text/css" href="{% static 'rugapp/styles.css'%}">ad>
     <body id="page-top">
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
             <div class="container px-4">
-                <a class="navbar-brand" href="#page-top">StopTheRug</a>
+                <a class="navbar-brand nav-item" style = "padding-top:2%;  href="#page-top">StopTheRug</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-
         <form class="form-inline" method="post">
             {% csrf_token %}
-            {{form}}
+            {{ form|crispy }}
 
             </li>
-                         <li class="nav-item">
+                         <li style = "padding-top:7%;" class="nav-item">
       <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
                              </li>
         </form>
-                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                        <li class="nav-item" style = "padding-top:6.5%;"><a class="nav-link" href="#about">About</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
         <!-- Header-->
-        <header class="bg-primary bg-gradient text-white">
+        <header class="bg-primary bg-gradient text-white ">
+
             <div class="container px-4 text-center">
                 <h1 class="fw-bolder">Stop the Rug</h1>
                 <p class="lead">A user-generated credibility check on NFTs</p>
@@ -49,11 +51,18 @@
             <div class="container d-flex justify-content-center align-items-center">
         <h1>Top 10</h1>
             </div>
+    {% if voted %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>Thank you for voting on {{nft_voted_for}}</strong> you contributed to it's credibility score!
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+ {% endif %}
         </section>
         <!-- Services section-->
         {%for nft in nfts %}
         <section class="bg-light" >
             <div class="container d-flex justify-content-center align-items-center">
+
 
 
     <div class="card">
@@ -66,7 +75,15 @@
             <!--<span class="text-muted d-block mb-2 overflow-ellipsis">{{nft.description}}</span>-->
             <div class="d-flex justify-content-between align-items-center mt-4 px-4">
                 <div class="stats">
-                    <h6 class="mb-0">Credibility Rating</h6> <span>{{nft.credibility_rating}}</span>
+                    {% if nft.credibility_rating > 75 %}
+                    <h6 class="mb-0" >Credibility Rating</h6> <span style="color:green">{{nft.credibility_rating}}</span>
+                    {% elif nft.credibility_rating < 75 and nft.credibility_rating > 55 %}
+                    <h6 class="mb-0" >Credibility Rating</h6> <span style="color:#FEDD00">{{nft.credibility_rating}}</span>
+                    {% elif nft.credibility_rating > 0 and nft.credibility_rating < 55 %}
+                     <h6 class="mb-0">Credibility Rating</h6> <span style="color:red">{{nft.credibility_rating}}</span>
+                    {% else %}
+                      <h6 class="mb-0">Credibility Rating</h6> <span style="color:black">{{nft.credibility_rating}}</span>
+                    {% endif %}
                 </div>
                 <div class="stats">
                     <h6 class="mb-0">Votes</h6> <span>{{nft.votes}}</span>

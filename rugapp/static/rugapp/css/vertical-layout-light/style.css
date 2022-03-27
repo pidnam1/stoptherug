@@ -15491,11 +15491,11 @@ fieldset:disabled .swal2-modal .swal2-buttonswrapper .swal2-styled,
 }
 
 .fixed-top {
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
   left: 0;
-  z-index: 1030;
+  z-index: 200;
 }
 
 .fixed-bottom {
@@ -16374,6 +16374,7 @@ fieldset:disabled .swal2-modal .swal2-buttonswrapper .swal2-styled,
 
 .ms-5 {
   margin-left: 3rem !important;
+
 }
 
 .ms-auto {
@@ -19623,11 +19624,12 @@ textarea {
 .ajax-upload-dragdrop .ajax-file-upload:visited,
 .swal2-modal .swal2-buttonswrapper .swal2-styled:visited,
 a,
-a:active,
-a:checked,
-a:focus,
-a:hover,
-a:visited,
+a:link { text-decoration: none; }
+a:visited { text-decoration: none; }
+a:hover { text-decoration: underline;
+ transition: 0.5s;}
+a:active { text-decoration: underline;
+ transition: 0.5s;}
 body,
 button,
 button:active,
@@ -28872,11 +28874,13 @@ div.tagsinput span.tag a {
   min-height: 100vh;
   padding-top: 0;
 }
-
+.rounded-circle {
+  border-radius: 50% !important;
+}
 .main-panel {
   transition: width 0.25s ease, margin 0.25s ease;
-  width: calc(100% - 220px);
-  min-height: calc(100vh - 97px);
+  width: 100%;
+
   display: -webkit-flex;
   display: flex;
   -webkit-flex-direction: column;
@@ -30594,7 +30598,7 @@ div.tagsinput span.tag a {
     display: none;
   }
   .sidebar-mini .main-panel {
-    width: calc(100% - 145px);
+    width: 0px;
   }
   .sidebar-mini:not(.sidebar-icon-only) .sidebar .nav.sub-menu {
     padding: 0;
